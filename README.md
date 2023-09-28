@@ -33,7 +33,7 @@ set.seed(1234) #randomization`
 trainIndex <- createDataPartition(df$Diagnosis,p=0.7,list=FALSE)
 
 
-#splitting data into training/testing data using the trainIndex object
+#Splitting data into training/testing data using the trainIndex object
 
 train <- df[trainIndex,] #training data (70% of data)
 
@@ -55,9 +55,9 @@ for(i in 2:ncol(train)){
   print( summary(logreg1))
 }
 
-## muchas variables con pvalue <2e-16 ***
+## Muchas variables con pvalue <2e-16 ***
 
-##las elijo para el subset
+##Las elijo para el subset
 
 #radius_mean texture_mean perimeter_mean area_mean
 #smoothness_mean compactness_mean concavity_mean concave_points_mean
@@ -72,9 +72,9 @@ LogReg2 <- glm(Diagnosis~radius_mean+ texture_mean+ perimeter_mean+ area_mean+
                compactness_worst+ concavity_worst+ concave_points_worst, family = 'binomial',
                data = train, maxit=100000)
                
-summary(LogReg2) #casi ninguna significativa
+summary(LogReg2) #Casi ninguna significativa
 
-#saco las menos significativas
+#Saco las menos significativas
 
 LogReg3 <- glm(Diagnosis~radius_mean+ texture_mean+ perimeter_mean+ area_mean+
                  smoothness_mean+ compactness_mean+ concavity_mean+ concave_points_mean+
@@ -85,8 +85,8 @@ LogReg3 <- glm(Diagnosis~radius_mean+ texture_mean+ perimeter_mean+ area_mean+
                
 summary(LogReg3)
 
-#algunos empiezan a ser significativos
-#los reuno
+#Algunos empiezan a ser significativos
+#Los reuno
 LogReg4 <- glm(Diagnosis~smoothness_mean+compactness_mean+
                  concavity_mean+concave_points_mean+
                  perimeter_se+perimeter_worst+concavity_worst,
@@ -95,7 +95,7 @@ LogReg4 <- glm(Diagnosis~smoothness_mean+compactness_mean+
                
 summary(LogReg4)
 
-#saco el menos significativo
+#Saco el menos significativo
 LogReg5 <- glm(Diagnosis~smoothness_mean+compactness_mean+
                  concave_points_mean+
                  perimeter_se+perimeter_worst+concavity_worst,
@@ -104,7 +104,7 @@ LogReg5 <- glm(Diagnosis~smoothness_mean+compactness_mean+
 
 summary(LogReg5)
 
-#saco el menos significativo de nuevo
+#Saco el menos significativo de nuevo
 
 LogReg5 <- glm(Diagnosis~smoothness_mean+compactness_mean+
                  perimeter_worst+concavity_worst,
@@ -115,13 +115,13 @@ summary(LogReg5)
 
 ########## CROSS VALIDATION #############
 
-# define training control
+# Define training control
 
 set.seed(115)
 
 train_control <- trainControl(method = "cv", number = 5)
 
-# train the model on training set
+# Train the model on training set
 
 cv_model <- train(as.character(Diagnosis)~smoothness_mean+compactness_mean+
                  perimeter_worst+concavity_worst,
@@ -134,13 +134,13 @@ cv_model
 
 cv_model$resample
 
-# mido el f1
+# Mido el f1
 
 set.seed(115)
 
 train_control <- trainControl(method = "cv", number = 5)
 
-# train the model on training set
+# Train the model on training set
 
 cv_model <- train(as.character(Diagnosis)~smoothness_mean+compactness_mean+
                     perimeter_worst+concavity_worst,
@@ -153,7 +153,7 @@ cv_model
 
 cv_model$resample
 
-# print cv scores
+# Print cv scores
 
 summary(cv_model)
 
@@ -248,7 +248,7 @@ disp = ConfusionMatrixDisplay(confusion_matrix=tree_cm,
 
 disp.plot() 
 
-#tree_predict
+#Tree_predict
 
 from sklearn.metrics import accuracy_score
 
